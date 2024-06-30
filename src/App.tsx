@@ -1,6 +1,6 @@
 
 import './App.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Square from './components/Square';
 // import Square from './components'/Square';
 function App() {
@@ -13,7 +13,18 @@ function App() {
 
   const [game,setGame]= useState(mySquare)  
   const [currentPlayer, setCurentPlayer]= useState("tick")
+  const [finalPlayer, setFinalPlayer]= useState(false)
  
+
+  useEffect(() => {
+    const myPlayer = game;
+    
+
+
+    
+  }, [game])
+  
+
   return (
 <div className="cursor-pointer ripple-background h-screen flex items-center justify-center">
   <div className="flex flex-col items-center">
@@ -24,14 +35,16 @@ function App() {
     <p className='text-2xl m-3 font-semibold text-black bg-gray-800 bg-opacity-10 w-full p-3 rounded-lg'>Tic Tac Toe</p>
     <div className="max-w-sm flex flex-col items-center justify-center min-h-fit p-7 rounded-lg bg-white z-10 opacity-75 text-center">
       <div className="grid grid-cols-3 gap-4 bg-transparent">
-        {game.map((arr) =>
-          arr.map((e) => {
+        {game.map((arr,rowIndex) =>
+          arr.map((e,colIndex) => {
             return <Square 
-                   key={e} 
-                   id={e}  
+                   key={rowIndex*3+colIndex} 
+                   id={rowIndex*3+colIndex}  
                    setGame={setGame}
                    currentPlayer={currentPlayer}
-                   setCurentPlayer={setCurentPlayer} />;
+                   setCurentPlayer={setCurentPlayer} 
+                   finalPlayer={finalPlayer}
+                   setFinalPlayer={setFinalPlayer}/>;
           })
         )}
       </div>
