@@ -55,7 +55,8 @@ console.log(state.includes(id),"state");
      className={`w-24 h-24 bg-black opacity-50
        rounded-lg cursor-pointer text-center
         ${finalPlayer ? 'cursor-not-allowed':"cursor-pointer"}
-        ${state.includes(id)? finalPlayer + 'bg-blue-500':""}
+        ${state.includes(id) ? (finalPlayer === 'tick' ? 'bg-blue-700' : finalPlayer === 'cross' ? 'bg-pink-500' : '') : ""}
+
      `} >{icon}</div>
   )
 }

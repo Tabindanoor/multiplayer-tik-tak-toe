@@ -1,9 +1,10 @@
 
 import './App.css'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Square from './components/Square';
+import { socket } from './socket';
 // import Square from './components'/Square';
-function App() {
+const App=async()=> {
 
   const mySquare =[
     [1,2,3],
@@ -14,8 +15,12 @@ function App() {
   const [game,setGame]= useState(mySquare)  
   const [currentPlayer, setCurentPlayer]= useState("tick")
   const [finalPlayer, setFinalPlayer]= useState(false)
-  const [state,setState] =useEffect([])
+  const [state,setState] =useState([])
+  const [playOnline,setPlayOnline]=useState(false)
 
+ 
+  const Mysocket = await socket
+  console.log(Mysocket)
  
 
   const getWinner=()=>{
@@ -38,8 +43,10 @@ function App() {
     }
 
     if(game[0][0] === game[1][1] && game[1][1] === game[2][2]  )
+
       {
         // console.log(game[0][0])
+         setState([0 * 3 + 0, 1 * 3 + 1, 2 * 3 + 2]);
         return game[0][0]
       }
 
@@ -47,13 +54,14 @@ function App() {
        if(game[0][2] === game[1][1] && game[1][1] === game[2][0]  )
       {
         // console.log(game[0][2])
+        setState([0 * 3 + 2, 1 * 3 + 1, 2 * 3 + 0]);
         return game[0][2]
       }
 
       const isDraw = game.flat().every((e)=>{
         if(e === 'cross' || e ==='tick') return true;
       })
-      console.log(isDraw);
+      // console.log(isDraw);
   
       if(isDraw)return 'draw';
     
