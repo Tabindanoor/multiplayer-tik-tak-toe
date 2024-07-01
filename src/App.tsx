@@ -14,13 +14,66 @@ function App() {
   const [game,setGame]= useState(mySquare)  
   const [currentPlayer, setCurentPlayer]= useState("tick")
   const [finalPlayer, setFinalPlayer]= useState(false)
+  const [state,setState] =useEffect([])
+
  
 
-  useEffect(() => {
-    const myPlayer = game;
+  const getWinner=()=>{
+    
+    for (let row = 0; row < game.length; row++) {
+      if(game[row][0] === game[row][1] && game[row][1] === game[row][2]  )
+      {
+        // console.log(game[row][0])
+        setState([row*3 + 0 , row*3 +1 , row*3 +2 ])
+        return game[row][0]
+      }
+    }
+    for (let col = 0; col < game.length; col++) {
+      if(game[0][col] === game[1][col] && game[1][col] === game[2][col]  )
+      {
+        // console.log(game[0][col])
+        setState([0*3 + col , 1 * 3 + col  , 2 *3 + col])
+        return game[0][col]
+      }
+    }
+
+    if(game[0][0] === game[1][1] && game[1][1] === game[2][2]  )
+      {
+        // console.log(game[0][0])
+        return game[0][0]
+      }
+
+
+       if(game[0][2] === game[1][1] && game[1][1] === game[2][0]  )
+      {
+        // console.log(game[0][2])
+        return game[0][2]
+      }
+
+      const isDraw = game.flat().every((e)=>{
+        if(e === 'cross' || e ==='tick') return true;
+      })
+      console.log(isDraw);
+  
+      if(isDraw)return 'draw';
     
 
 
+    return null;
+
+  }
+
+    
+  useEffect(() => {
+    const winner = getWinner()
+    if(winner)
+      {
+        setFinalPlayer(winner)
+      }
+    // if(winner === 'tick' || winner === 'cross'){
+    //   setFinalPlayer(winner)
+    // }
+// console.log(getWinner)
     
   }, [game])
   
@@ -38,6 +91,7 @@ function App() {
         {game.map((arr,rowIndex) =>
           arr.map((e,colIndex) => {
             return <Square 
+                    state={state}
                    key={rowIndex*3+colIndex} 
                    id={rowIndex*3+colIndex}  
                    setGame={setGame}
@@ -49,6 +103,12 @@ function App() {
         )}
       </div>
     </div>
+    { finalPlayer && finalPlayer !== 'draw' &&
+       <p>{finalPlayer} won the game</p>}
+
+
+{ finalPlayer && finalPlayer === 'draw' &&
+       <p>{finalPlayer} It's a Draw :)</p>}
   </div>
 </div>
 

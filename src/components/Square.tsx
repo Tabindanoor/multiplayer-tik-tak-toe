@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const Square = ({id,setGame,currentPlayer,setCurentPlayer,finalPlayer,setFinalPlayer}) => {
+const Square = ({id,setGame,currentPlayer,setCurentPlayer,finalPlayer,setFinalPlayer,state}) => {
 
   const [icon, setIcon]= useState(null)
 
@@ -14,6 +14,12 @@ const tick =(<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24
 </svg>)
 
 const squareClick=()=>{
+
+  if(finalPlayer){
+    return;
+  }
+
+
     if(!icon){
       if(currentPlayer==='tick'){
         setIcon(tick)
@@ -23,15 +29,15 @@ const squareClick=()=>{
         setIcon(cross)
       }
       const myCurrentPlayer = currentPlayer;
-      console.log(myCurrentPlayer);
-      
+      // console.log(myCurrentPlayer);
+     
       setCurentPlayer(currentPlayer === 'tick'?'cross':'tick')
       setGame(prevState=>{
         let newState = [...prevState]
         const rowIndex = Math.floor(id/3);
         const columnIndex = id%3;
         newState[rowIndex][columnIndex]=myCurrentPlayer;
-        console.log(newState);
+        // console.log(newState);
         return newState;
 
       }
@@ -41,8 +47,16 @@ const squareClick=()=>{
 
 }
 
+
+console.log(state.includes(id),"state");
+
   return (
-    <div onClick={squareClick} className="w-24 h-24 bg-black opacity-50 rounded-lg cursor-pointer text-center">{icon}</div>
+    <div onClick={squareClick}
+     className={`w-24 h-24 bg-black opacity-50
+       rounded-lg cursor-pointer text-center
+        ${finalPlayer ? 'cursor-not-allowed':"cursor-pointer"}
+        ${state.includes(id)? finalPlayer + 'bg-blue-500':""}
+     `} >{icon}</div>
   )
 }
 
