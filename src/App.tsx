@@ -26,8 +26,8 @@ const App=()=> {
   const [state,setState] =useState([])
   const [playOnline,setPlayOnline]=useState(false)
   const [socketState,setSocketState]= useState(null)
-  
-
+  const [playerName,setPlayerName] = useState("")
+  const [opponentName,setOpponentsName] = useState("")
   const getWinner=()=>{
     
     for (let row = 0; row < game.length; row++) {
@@ -104,17 +104,20 @@ const takePlayername = async()=>{
     }
   }
 
-return result
+
 );
   // if (ipAddress) {
   //   Swal.fire(`Your IP address is ${ipAddress}`);
   // }
-
+  // console.log(result);
+  
+  return result
 
 }
 
 socketState &&  socketState?.on('connect',()=>{
   setPlayOnline(true)
+
 })
     
  
@@ -131,10 +134,24 @@ socketState &&  socketState?.on('connect',()=>{
 
 const onlinePlayClick=async()=>{
   const result = await takePlayername()
-  console.log(result,"res")
+  if(!result.isConfirmed){
+    return;
+  }
+
+  const username = result.value;
+  setPlayerName(username)
+  // console.log(result,"res")
+
+
   const newState = io('http://localhost:3000',{
     autoConnect:true
   })
+
+  // emitting the fucntion to the backend socket io 
+  newState?.emit("request_to_play",{
+    playerName:username
+  }
+)
   setSocketState(newState)
 }
 
@@ -148,6 +165,15 @@ if(!playOnline)
 </div>
 )
  
+
+
+if(playOnline && !opponentName)
+  return(
+<div>
+<p  className='p-2 bg-purple-600 border-2 border-black rounded-lg text-xl  '>Waiting for opponent</p>
+</div>
+)
+
   return (
 <div className="cursor-pointer ripple-background h-screen flex items-center justify-center">
   <div className="flex flex-col items-center">
@@ -156,12 +182,12 @@ if(!playOnline)
       <div className="px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg  "> Opponent</div>
     </div>
     <p className='text-2xl m-3 font-semibold text-black bg-gray-800 bg-opacity-10 w-full p-3 rounded-lg'>Tic Tac Toe</p>
-    <div className="max-w-sm flex flex-col items-center justify-center min-h-fit p-7 rounded-lg bg-white z-10 opacity-75 text-center">
-      <div className="grid grid-cols-3 gap-4 bg-transparent">
+   
+    <div className="max-w-sm flex flex-col items-center justify-center min-h-fit p-7 rounded-lg bg-white z-10  text-center">
+      <div className="grid grid-cols-3 gap-4 ">
         {game.map((arr,rowIndex) =>
           arr.map((e,colIndex) => {
-            return <Square 
-                    
+            return <Square                    
                     state={state}
                    key={rowIndex*3+colIndex} 
                    id={rowIndex*3+colIndex}  

@@ -42,20 +42,20 @@ const squareClick=()=>{
 
       }
       )
-      console.log(id)
+      // console.log(id)
     }
 
 }
 
 
-console.log(state.includes(id),"state");
+// console.log(state.includes(id),"state");
 
   return (
     <div onClick={squareClick}
-     className={`w-24 h-24 bg-black opacity-50
+     className={`w-24 h-24 bg-black 
        rounded-lg cursor-pointer text-center
         ${finalPlayer ? 'cursor-not-allowed':"cursor-pointer"}
-        ${state.includes(id) ? (finalPlayer === 'tick' ? 'bg-blue-700' : finalPlayer === 'cross' ? 'bg-pink-500' : '') : ""}
+        ${state.includes(id) ? (finalPlayer === 'tick' ? 'bg-green-700' : finalPlayer === 'cross' ? 'bg-pink-500' : '') : ""}
 
      `} >{icon}</div>
   )
