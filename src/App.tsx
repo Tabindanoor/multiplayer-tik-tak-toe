@@ -2,9 +2,16 @@
 import './App.css'
 import { useEffect, useRef, useState } from 'react';
 import Square from './components/Square';
-import { socket } from './socket';
-// import Square from './components'/Square';
-const App=async()=> {
+// import { initSocket, socket } from './socket';
+import { io } from 'socket.io-client'; 
+import Swal from 'sweetalert2';
+const App=()=> {
+
+
+  // socket connection code is here 
+  // const socket = io('http://localhost:3000',{
+  //   autoConnect:true
+  // })
 
   const mySquare =[
     [1,2,3],
@@ -12,16 +19,14 @@ const App=async()=> {
     [7,8,9]
   ]
 
+
   const [game,setGame]= useState(mySquare)  
   const [currentPlayer, setCurentPlayer]= useState("tick")
   const [finalPlayer, setFinalPlayer]= useState(false)
   const [state,setState] =useState([])
   const [playOnline,setPlayOnline]=useState(false)
-
- 
-  const Mysocket = await socket
-  console.log(Mysocket)
- 
+  const [socketState,setSocketState]= useState(null)
+  
 
   const getWinner=()=>{
     
@@ -71,7 +76,6 @@ const App=async()=> {
 
   }
 
-    
   useEffect(() => {
     const winner = getWinner()
     if(winner)
@@ -84,8 +88,66 @@ const App=async()=> {
 // console.log(getWinner)
     
   }, [game])
-  
 
+
+const takePlayername = async()=>{
+  const result = await Swal.fire({
+    title: "Enter name",
+    input: "text",
+    inputLabel: "Your Name Here Please :)",
+    // inputValue,
+    showCancelButton: true,
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to write something!";
+      }
+    }
+  }
+
+return result
+);
+  // if (ipAddress) {
+  //   Swal.fire(`Your IP address is ${ipAddress}`);
+  // }
+
+
+}
+
+socketState &&  socketState?.on('connect',()=>{
+  setPlayOnline(true)
+})
+    
+ 
+// useEffect(() => {
+
+// socketState && socketState?.on('connect',function(){
+//   // setPlayOnline(true)
+//   // alert("connected to server")
+//   setPlayOnline(socketState)
+// })
+// }, [socketState])
+
+
+
+const onlinePlayClick=async()=>{
+  const result = await takePlayername()
+  console.log(result,"res")
+  const newState = io('http://localhost:3000',{
+    autoConnect:true
+  })
+  setSocketState(newState)
+}
+
+
+if(!playOnline)
+  return(
+<div>
+<button 
+    onClick={onlinePlayClick}
+    className='p-2 bg-yellow-600 border-2 border-black rounded-lg text-xl  '>Play Online</button>
+</div>
+)
+ 
   return (
 <div className="cursor-pointer ripple-background h-screen flex items-center justify-center">
   <div className="flex flex-col items-center">
@@ -99,6 +161,7 @@ const App=async()=> {
         {game.map((arr,rowIndex) =>
           arr.map((e,colIndex) => {
             return <Square 
+                    
                     state={state}
                    key={rowIndex*3+colIndex} 
                    id={rowIndex*3+colIndex}  

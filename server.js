@@ -4,11 +4,14 @@ import { Server } from 'socket.io';
 
 const app = express();
 const server = createServer(app);
-const io= new Server(server)
+const io= new Server(server,{
+    cors:"http://localhost:5173"
+})
 
 
 io.on('connection',(socket)=>{
-    "connectoion estabilished"
+    // console.log("connection eatabilished");
+    console.log("id generated",socket.id)
 })
 
 
