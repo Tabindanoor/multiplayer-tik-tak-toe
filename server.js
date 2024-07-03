@@ -37,28 +37,38 @@ io.on('connection',(socket)=>{
         }
 
      
+
+        if(opponentPlayer){
+            
+        }
+
         console.log(opponentPlayer)
         if(opponentPlayer){
             console.log("opponent found")
+
+            opponentPlayer.socket.emit("opponent_found",{
+            opponentName:currentUser.playerName
+
+            })
+            currentUser.socket.emit("opponent_found",{
+                opponentName:opponentPlayer.playerName
+            })
         }
         else{
             console.log("opponent not found")
-
+            currentUser.socket.emit("opponent_not_found")
         }
     })
 
     socket.on('disconnect',(function(){
-        // for (let index = 0; index < allUsers.length; index++) {
-        //     const user = allUsers[index];
-        //     if(user.id===socket.id){
-        //         user.ononline = false
-        //     } 
+       const currentUser = allUsers[socket.id];
+       currentUser.ononline= false
+        // allUsers[socket.id]= {
+        //     socket:{...socket,ononline:false},
+        //     ononline:true,
         // }
 
-        allUsers[socket.id]= {
-            socket:{...socket,ononline:false},
-            ononline:true,
-        }
+
     }))
 
 

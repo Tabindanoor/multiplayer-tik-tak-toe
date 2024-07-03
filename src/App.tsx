@@ -27,7 +27,7 @@ const App=()=> {
   const [playOnline,setPlayOnline]=useState(false)
   const [socketState,setSocketState]= useState(null)
   const [playerName,setPlayerName] = useState("")
-  const [opponentName,setOpponentsName] = useState("")
+  const [opponentName,setOpponentsName] = useState()
   const getWinner=()=>{
     
     for (let row = 0; row < game.length; row++) {
@@ -116,8 +116,16 @@ const takePlayername = async()=>{
 }
 
 socketState &&  socketState?.on('connect',()=>{
-  setPlayOnline(true)
+  setPlayOnline(true);
 
+})
+
+socketState &&  socketState?.on('opponent_not_found',()=>{
+    setOpponentsName(false)
+})
+
+socketState &&  socketState?.on('opponent_found',(data)=>{
+  setOpponentsName(data.opponentName)
 })
     
  
@@ -152,6 +160,7 @@ const onlinePlayClick=async()=>{
     playerName:username
   }
 )
+
   setSocketState(newState)
 }
 
@@ -178,8 +187,8 @@ if(playOnline && !opponentName)
 <div className="cursor-pointer ripple-background h-screen flex items-center justify-center">
   <div className="flex flex-col items-center">
     <div className="flex space-x-4 justify-between ">
-      <div className=" px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg ">You</div>
-      <div className="px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg  "> Opponent</div>
+      <div className=" px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg ">{playerName}</div>
+      <div className="px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg  "> { opponentName}</div>
     </div>
     <p className='text-2xl m-3 font-semibold text-black bg-gray-800 bg-opacity-10 w-full p-3 rounded-lg'>Tic Tac Toe</p>
    
@@ -200,12 +209,16 @@ if(playOnline && !opponentName)
         )}
       </div>
     </div>
-    { finalPlayer && finalPlayer !== 'draw' &&
+
+{ finalPlayer && finalPlayer !== 'draw' &&
        <p>{finalPlayer} won the game</p>}
 
 
 { finalPlayer && finalPlayer === 'draw' &&
        <p>{finalPlayer} It's a Draw :)</p>}
+
+{ !finalPlayer && opponentName &&
+       <p>Your are playing against {opponentName} </p>}
   </div>
 </div>
 
