@@ -83,6 +83,7 @@ const App=()=> {
   }, [game])
 
 
+
 const takePlayername = async()=>{
   const result = await Swal.fire({
     title: "Enter name",
@@ -99,6 +100,10 @@ const takePlayername = async()=>{
   return result
 
 }
+
+
+
+// //////////////////////////////////
 
 
 socketState?.on("playerMoveFromServer",(data)=>{
@@ -133,12 +138,17 @@ socketState &&  socketState?.on('opponent_not_found',()=>{
     setOpponentsName(false)
 })
 
+socketState && socketState?.on('opponent_left_match',()=>{
+  alert("opponent_left_match")
+  setFinalPlayer('opponent_left_match')
+})
+
 socketState &&  socketState?.on('opponent_found',(data)=>{
   setPlayingAs(data.playingAs)
   setOpponentsName(data.opponentName);
 })
     
-
+// /////////////////////////////////////////////////////
 const onlinePlayClick=async()=>{
   const result = await takePlayername()
   if(!result.isConfirmed){
@@ -163,6 +173,40 @@ const onlinePlayClick=async()=>{
   setSocketState(newState)
 }
 
+
+
+
+
+// useEffect(() => {
+//   if (socketState) {
+//     socketState.on("connect", () => {
+//       setPlayOnline(true);
+//     });
+
+//     socketState.on("opponent_not_found", () => {
+//       setOpponentsName(false);
+//     });
+
+//     socketState.on("opponent_found", (data) => {
+//       setPlayingAs(data.playingAs);
+//       setOpponentsName(data.opponentName);
+//     });
+
+//     socketState.on("playerMoveFromServer", (data) => {
+//       const id = data.state.id;
+//       setGame((prevState) => {
+//         let newState = [...prevState];
+//         const rowIndex = Math.floor(id / 3);
+//         const columnIndex = id % 3;
+//         newState[rowIndex][columnIndex] = data.state.sign;
+//         return newState;
+//       });
+//       setCurentPlayer(data.state.sign === "tick" ? "cross" : "tick");
+//     });
+//   }
+// }, [socketState]);
+///// is se oper likhna ha 
+// /////////////////////////////
 
 if(!playOnline)
   return(
@@ -198,7 +242,8 @@ if(playOnline && !opponentName)
       <div className="grid grid-cols-3 gap-4 ">
         {game.map((arr,rowIndex) =>
           arr.map((e,colIndex) => {
-            return <Square    
+            return (
+                  <Square    
                   socketState={socketState}                
                   state={state}
                   key={rowIndex*3+colIndex} 
@@ -208,15 +253,18 @@ if(playOnline && !opponentName)
                   currentPlayer={currentPlayer}
                   setCurentPlayer={setCurentPlayer} 
                   finalPlayer={finalPlayer}
-                  setFinalPlayer={setFinalPlayer}/>;
+                  setFinalPlayer={setFinalPlayer}
                   currentElement={e}
+                  playingAs={playingAs}
+                  />)
+                
           })
         )}
       </div>
     </div>
 
 { finalPlayer && finalPlayer !== 'draw' &&
-       <p>{finalPlayer} won the game</p>}
+       <p>{finalPlayer === playingAs ? "You":finalPlayer} won the game</p>}
 
 
 { finalPlayer && finalPlayer === 'draw' &&
@@ -406,21 +454,22 @@ export default App
 //         <div className="max-w-sm flex flex-col items-center justify-center min-h-fit p-7 rounded-lg bg-white z-10 text-center">
 //           <div className="grid grid-cols-3 gap-4">
 //             {game.map((row, rowIndex) =>
-//               row.map((element, colIndex) => (
+//               row.map((element, colIndex) => {
+//                 return(
 //                 <Square
 //                   key={rowIndex * 3 + colIndex}
 //                   id={rowIndex * 3 + colIndex}
 //                   setGame={setGame}
 //                   game={game}
 //                   currentPlayer={currentPlayer}
-//                   setCurrentPlayer={setCurrentPlayer}
+//                   setCurentPlayer={setCurrentPlayer}
 //                   finalPlayer={finalPlayer}
 //                   setFinalPlayer={setFinalPlayer}
 //                   state={state}
 //                   socketState={socketState}
 //                   currentElement={element}
 //                 />
-//               ))
+//               )})
 //             )}
 //           </div>
 //         </div>
