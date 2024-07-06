@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Square from './components/Square';
 import { io } from 'socket.io-client'; 
 import Swal from 'sweetalert2';
+import PlayOnline from './components/PlayOnline';
 
 const mySquare =[
   [1,2,3],
@@ -193,13 +194,17 @@ const onlinePlayClick=async()=>{
 
 if(!playOnline)
   return(
-<div>
+
+    <PlayOnline onlinePlayClick={onlinePlayClick}  />
+
+)
+ 
+
+{/* <div>
 <button 
     onClick={onlinePlayClick}
     className='p-2 bg-yellow-600 border-2 border-black rounded-lg text-xl  '>Play Online</button>
-</div>
-)
- 
+</div> */}
 
 
 if(playOnline && !opponentName)
