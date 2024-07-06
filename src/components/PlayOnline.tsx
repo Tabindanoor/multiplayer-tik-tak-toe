@@ -12,10 +12,10 @@ const PlayOnline = ({onlinePlayClick}) => {
 
     
 
-<div>
+<div> 
 <button 
     onClick={onlinePlayClick}
-    className='p-2 bg-yellow-600 border-2 border-black rounded-lg text-xl  '>Play Online</button>
+    className='p-2 bg-yellow-600 border-2  border-black rounded-lg text-xl  '>Play Online</button>
 </div>
      
 

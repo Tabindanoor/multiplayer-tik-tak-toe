@@ -5,6 +5,7 @@ import Square from './components/Square';
 import { io } from 'socket.io-client'; 
 import Swal from 'sweetalert2';
 import PlayOnline from './components/PlayOnline';
+import Waiting from './components/Waiting';
 
 const mySquare =[
   [1,2,3],
@@ -194,23 +195,24 @@ const onlinePlayClick=async()=>{
 
 if(!playOnline)
   return(
-
+//  <div>
+// <button 
+//     onClick={onlinePlayClick}
+//     className='p-2 bg-yellow-600 border-2 border-black rounded-lg text-xl  '>Play Online</button>
+// </div> 
     <PlayOnline onlinePlayClick={onlinePlayClick}  />
 
 )
  
 
-{/* <div>
-<button 
-    onClick={onlinePlayClick}
-    className='p-2 bg-yellow-600 border-2 border-black rounded-lg text-xl  '>Play Online</button>
-</div> */}
+
 
 
 if(playOnline && !opponentName)
   return(
 <div>
-<p  className='p-2 bg-purple-600 border-2 border-black rounded-lg text-xl  '>Waiting for opponent</p>
+  <Waiting/>
+     
 </div>
 )
 
@@ -218,9 +220,8 @@ if(playOnline && !opponentName)
 <div className="cursor-pointer ripple-background h-screen flex items-center justify-center">
   <div className="flex flex-col items-center">
     <div className="flex space-x-4 justify-between ">
-      {/* <div className= {`px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg   ${playingAs === playingAs? 'bg-pink-800 '+currentPlayer:""}`} >{playerName}</div> */}
-      {/* <div className={`px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg    ${playingAs !== playingAs? 'bg-green-700 '+currentPlayer:""} `}> { opponentName}</div> */}
-      <div className= {`px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg   ${currentPlayer === playingAs? 'bg-pink-800 '+currentPlayer:""}`} >{playerName}</div>
+     
+     <div className= {`px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg   ${currentPlayer === playingAs? 'bg-pink-800 '+currentPlayer:""}`} >{playerName}</div>
       <div className={`px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg    ${currentPlayer !== playingAs? 'bg-green-700 '+currentPlayer:""} `}> { opponentName}</div>
    
     </div>
