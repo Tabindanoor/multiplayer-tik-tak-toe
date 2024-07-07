@@ -225,7 +225,7 @@ if(playOnline && !opponentName)
       <div className={`px-4 py-2  w-28 h-12 bg-gray-500  border-white text-white rounded-lg    ${currentPlayer !== playingAs? 'bg-green-700 '+currentPlayer:""} `}> { opponentName}</div>
    
     </div>
-    <p className='text-2xl m-3 font-semibold text-black bg-gray-800 bg-opacity-10 w-full p-3 rounded-lg'>Tic Tac Toe</p>
+    <p className='text-2xl m-3 font-semibold  bg-gray-800 text-white w-full p-3 rounded-lg'> Let's Play Tic Tac Toe </p>
    
     <div className="max-w-sm flex flex-col items-center justify-center min-h-fit p-7 rounded-lg bg-white z-10  text-center">
       <div className="grid grid-cols-3 gap-4 ">
@@ -253,16 +253,16 @@ if(playOnline && !opponentName)
     </div>
 
 { finalPlayer && finalPlayer!==  'opponent_left_match' && finalPlayer !== 'draw' &&
-       <p>{finalPlayer === playingAs ? "You":finalPlayer} won the game</p>}
+       <p className='text-xl font-semibold font-serif  text-black '>{finalPlayer === playingAs ? "You":finalPlayer} won the game  </p>}
 
 
 { finalPlayer  &&  finalPlayer!==  'opponent_left_match' &&  finalPlayer === 'draw' &&
-       <p>{finalPlayer} It's a Draw :)</p>}
+       <p className='text-xl font-semibold font-serif  text-black '>{finalPlayer} It's a Draw :)</p>}
 
 { !finalPlayer && opponentName &&
-       <p>Your are playing against {opponentName} </p>}
+       <p className='text-xl font-semibold font-serif  text-black '>Your are playing against {opponentName} </p>}
 { finalPlayer  && finalPlayer === 'opponent_left_match' && opponentName &&
-       <p>You WOn !! opponent left match </p>}
+       <p className='text-xl font-semibold font-serif  text-black '>You WON !! opponent left match </p>}
 
 
   </div>
