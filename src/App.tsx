@@ -1,4 +1,3 @@
-
 import './App.css'
 import { useEffect, useState } from 'react';
 import Square from './components/Square';
@@ -103,11 +102,6 @@ const takePlayername = async()=>{
 
 }
 
-
-
-// //////////////////////////////////
-
-
 socketState?.on("playerMoveFromServer",(data)=>{
   // setCurentPlayer(data.state.currentPlayer);
   const id = data.state.id;
@@ -126,9 +120,6 @@ socketState?.on("playerMoveFromServer",(data)=>{
  
 
 })
-
-
-
   
 
 socketState &&  socketState?.on('connect',function(){
@@ -196,10 +187,6 @@ if(!playOnline)
 
 )
  
-
-
-
-
 if(playOnline && !opponentName)
   return(
 <div>
@@ -258,9 +245,6 @@ if(playOnline && !opponentName)
 
 
   </div>
-
-
- 
 </div>
 
   
