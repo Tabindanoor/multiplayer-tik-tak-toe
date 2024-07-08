@@ -145,15 +145,7 @@ socketState && socketState?.on('opponent_left_match',()=>{
 
   const result =  Swal.fire({
     title: "opponent left match",
-    // input: "text",
-    // inputLabel: "Your Name Here Please :)",
-    // inputValue,
-    // showCancelButton: true,
-    // inputValidator: (value) => {
-    //   if (!value) {
-    //     return "You need to write something!";
-    //   }
-    // }
+
   });  
   setFinalPlayer('opponent_left_match')
   return result
