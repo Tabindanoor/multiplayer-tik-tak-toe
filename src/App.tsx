@@ -1,7 +1,7 @@
 import './App.css'
 import { useEffect, useState } from 'react';
 import Square from './components/Square';
-import { io } from 'socket.io-client'; 
+import { io, Socket } from 'socket.io-client'; 
 import Swal from 'sweetalert2';
 import PlayOnline from './components/PlayOnline';
 import Waiting from './components/Waiting';
@@ -14,14 +14,18 @@ const mySquare =[
 
 const App=()=> {
 
-  const [game,setGame]= useState(mySquare)  
+  const [game,setGame]= useState<any>(mySquare)  
   const [currentPlayer, setCurentPlayer]= useState("tick")
-  const [finalPlayer, setFinalPlayer]= useState(false)
-  const [state,setState] =useState([])
+  // const [finalPlayer, setFinalPlayer]= useState(false)
+  const [finalPlayer, setFinalPlayer] = useState<number | string | boolean | any>(false);
+  const [state, setState] = useState<number[] | string | null | any>([]);
   const [playOnline,setPlayOnline]=useState(false)
-  const [socketState,setSocketState]= useState(null)
+  // const [socketState,setSocketState]= useState(null)
+  const [socketState, setSocketState] = useState<Socket | null>(null);
+
   const [playerName,setPlayerName] = useState("")
-  const [opponentName,setOpponentsName] = useState()
+  const [opponentName,setOpponentsName] = useState<null | boolean>()
+  // const [opponentName,setOpponentsName] = useState()
   const [playingAs,setPlayingAs] = useState('')
 
 
@@ -61,8 +65,10 @@ const App=()=> {
         return game[0][2]
       }
 
-      const isDraw = game.flat().every((e)=>{
-        if(e === 'cross' || e ==='tick') return true;
+      const isDraw = game.flat().every((e:any)=>{
+        // if(e === 'cross' || e ==='tick') return true;
+        if (typeof e === 'string' && (e === 'cross' || e === 'tick')) return true;
+
       })
       // console.log(isDraw);
   
@@ -102,10 +108,10 @@ const takePlayername = async()=>{
 
 }
 
-socketState?.on("playerMoveFromServer",(data)=>{
+socketState?.on("playerMoveFromServer",(data:any)=>{
   // setCurentPlayer(data.state.currentPlayer);
   const id = data.state.id;
-  setGame((prevState)=>{
+  setGame((prevState:any)=>{
     let newState = [...prevState]
     const rowIndex = Math.floor(id/3);
     const columnIndex = id%3;
@@ -208,8 +214,8 @@ if(playOnline && !opponentName)
    
     <div className="max-w-sm flex flex-col items-center justify-center min-h-fit p-7 rounded-lg bg-white z-10  text-center">
       <div className="grid grid-cols-3 gap-4 ">
-        {game.map((arr,rowIndex) =>
-          arr.map((e,colIndex) => {
+        {game.map(({arr,rowIndex}:any) =>
+          arr.map(({e,colIndex}:any) => {
             return (
                   <Square    
                   socketState={socketState}                

@@ -12,7 +12,7 @@ const tick =(<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24
 
 type SquareProps = {
   currentElement: string;
-  id: number;
+  id: any;
   setGame: React.Dispatch<React.SetStateAction<Array<Array<string | null>>>>;
   currentPlayer: string;
   setCurentPlayer: React.Dispatch<React.SetStateAction<string>>;
@@ -22,6 +22,9 @@ type SquareProps = {
   socketState: any; // Assuming socketState is an object. Replace 'any' with the correct type if available.
   game: Array<Array<string | null>>;
   playingAs: string;
+  // setIcon: any;
+  // setIcon: React.Dispatch<React.SetStateAction<React.ReactElement>>;
+
 };
 
 
@@ -32,13 +35,14 @@ const Square = ({
                 currentPlayer,
                 setCurentPlayer,
                 finalPlayer,
-                setFinalPlayer,
+                // setFinalPlayer,
                 state,
                 socketState,
-                game,
+                // game,
                 playingAs}:SquareProps) => {
 
-  const [icon, setIcon]= useState(null)
+  // const [icon, setIcon]= useState(null)
+  const [icon, setIcon]= useState<any>("")
 
 
 const squareClick=()=>{
