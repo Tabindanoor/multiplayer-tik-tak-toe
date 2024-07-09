@@ -19,11 +19,9 @@ type SquareProps = {
   finalPlayer: string | null;
   setFinalPlayer: React.Dispatch<React.SetStateAction<string | null>>;
   state: Array<Array<string | null>>;
-  socketState: any; // Assuming socketState is an object. Replace 'any' with the correct type if available.
+  socketState: any; 
   game: Array<Array<string | null>>;
   playingAs: string;
-  // setIcon: any;
-  // setIcon: React.Dispatch<React.SetStateAction<React.ReactElement>>;
 
 };
 

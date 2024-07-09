@@ -1,9 +1,19 @@
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const app = express();
 const server = createServer(app);
+
+
+const __filename =fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, 'dist')));
+
+
+
 
 // making the connection with the front-end 
 const io= new Server(server,{
