@@ -2,7 +2,7 @@ import './Waiting.css';
 
 const Waiting = () => {
   return (
-    <div className="ripple-background h-screen">
+    <div className="ripple-background h-screen w-screen  absolute overflow-hidden z-10">
       <div className="circle xxlarge shade1"></div>
       <div className="circle xlarge shade2"></div>
       <div className="circle large shade3"></div>

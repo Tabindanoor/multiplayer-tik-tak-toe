@@ -197,7 +197,7 @@ if(playOnline && !opponentName)
 )
 
   return (
-<div className="cursor-pointer ripple-background h-screen flex items-center justify-center">
+<div className="cursor-pointer ripple-background h-screen flex items-center justify-center    absolute overflow-hidden z-10 w-screen">
   <div className="flex flex-col items-center">
     <div className="flex space-x-4 justify-between ">
      
