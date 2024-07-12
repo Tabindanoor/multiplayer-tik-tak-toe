@@ -15,7 +15,7 @@ const mySquare =[
 const App=()=> {
 
   const [game,setGame]= useState(mySquare)  
-  const [currentPlayer, setCurentPlayer]= useState("tick")
+  const [currentPlayer, setCurentPlayer]= useState<string | number>("tick")
   const [finalPlayer, setFinalPlayer]= useState(false)
   const [state,setState] =useState([])
   const [playOnline,setPlayOnline]=useState(false)
