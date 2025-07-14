@@ -14,7 +14,6 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 
 
-
 // making the connection with the front-end 
 const io= new Server(server,{
     cors:"http://localhost:5173",
@@ -117,7 +116,6 @@ io.on('connection',(socket)=>{
 
 }
 )
-
 
 server.listen(3000, () => {
   console.log('server running at http://localhost:3000');
